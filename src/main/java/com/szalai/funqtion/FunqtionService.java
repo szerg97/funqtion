@@ -15,12 +15,14 @@ public class FunqtionService {
     private String operation;
 
     public void initWithParams(int numberA, int numberB) {
-        switch (OperationUtils.fromString(operation)) {
-            case SUM -> logIt(handleSum()).accept(numberA, numberB);
-            case SUB -> logIt(handleSub()).accept(numberA, numberB);
-            case MUL -> logIt(handleMul()).accept(numberA, numberB);
-            case DIV -> logIt(handleDiv()).accept(numberA, numberB);
-        }
+        runSafe(() -> {
+            switch (OperationUtils.fromString(operation)) {
+                case SUM -> logIt(handleSum()).accept(numberA, numberB);
+                case SUB -> logIt(handleSub()).accept(numberA, numberB);
+                case MUL -> logIt(handleMul()).accept(numberA, numberB);
+                case DIV -> logIt(handleDiv()).accept(numberA, numberB);
+            }
+        });
     }
 
     private BiConsumer<Integer, Integer> logIt(BiFunction<Integer, Integer, Integer> handler) {
@@ -44,5 +46,14 @@ public class FunqtionService {
 
     private BiFunction<Integer, Integer, Integer> handleDiv() {
         return (numberA, numberB) -> numberA / numberB;
+    }
+
+    private void runSafe(Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
+            throw FunqtionException.invalidOperationException(operation);
+        }
     }
 }
