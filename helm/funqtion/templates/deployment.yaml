@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: funqtion
+  labels:
+    app: funqtion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: funqtion
+  template:
+    metadata:
+      name: funqtion
+      labels:
+        app: funqtion
+    spec:
+      containers:
+        - name: funqtion
+          image: szalaigeri/funqtion:0.0.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: "FUNQTION_OPERATION"
+              value: {{ .Values.funqtion.operation }}
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: funqtion
+spec:
+  selector:
+    app: funqtion
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
