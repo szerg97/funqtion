@@ -45,9 +45,9 @@ class FunqtionServiceTest {
 
     @Test
     void testInvalidOperation() {
-        ReflectionTestUtils.setField(underTest, "operation", "divv");
+        ReflectionTestUtils.setField(underTest, "operation", "invalid");
         assertThatThrownBy(() -> underTest.initWithParams(3, 5))
-                .hasMessage("Invalid operation: divv")
+                .hasMessage("Invalid operation: invalid")
                 .isInstanceOfAny(FunqtionException.class);
     }
 }
