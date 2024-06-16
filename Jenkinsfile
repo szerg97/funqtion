@@ -3,6 +3,14 @@ pipeline {
     tools {
         maven 'Maven3'
     }
+    environment {
+        SONARQUBE_SERVER_URL = 'http://<SONARQUBE_SERVER_IP>:9000'
+        SONARQUBE_SCANNER_IMAGE = 'sonarsource/sonar-scanner-cli'
+        SONARQUBE_PROJECT_KEY = 'your_project_key'
+        SONARQUBE_PROJECT_NAME = 'Your Project Name'
+        SONARQUBE_PROJECT_VERSION = '1.0'
+        SONARQUBE_LOGIN = '<SONARQUBE_TOKEN>'
+    }
     stages {
         stage('Prepare') {
             steps {
@@ -27,8 +35,21 @@ pipeline {
         }
         stage('SonarQube analysis') {
             steps {
-                withSonarQubeEnv(credentialsId: 'f225455e-ea59-40fa-8af7-08176e86507a') { // You can override the credential to be used, If you have configured more than one global server connection, you can specify the corresponding SonarQube installation name configured in Jenkins
-                    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.3922:sonar'
+                script {
+                    // Use Docker to run SonarQube scanner
+                    docker.image(env.SONARQUBE_SCANNER_IMAGE).inside {
+                        withSonarQubeEnv('SonarQube') {
+                            sh """
+                            sonar-scanner \
+                                -Dsonar.projectKey=${env.SONARQUBE_PROJECT_KEY} \
+                                -Dsonar.projectName=${env.SONARQUBE_PROJECT_NAME} \
+                                -Dsonar.projectVersion=${env.SONARQUBE_PROJECT_VERSION} \
+                                -Dsonar.sources=. \
+                                -Dsonar.host.url=${env.SONARQUBE_SERVER_URL} \
+                                -Dsonar.login=${env.SONARQUBE_LOGIN}
+                            """
+                        }
+                    }
                 }
             }
         }
