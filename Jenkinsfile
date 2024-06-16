@@ -48,8 +48,12 @@ pipeline {
         }
     }
     post {
-        always {
-            archiveArtifacts artifacts: 'target/site/jacoco/*', allowEmptyArchive: true
+        success {
+            jacoco(
+                execPattern: '**/build/jacoco/*.exec',
+                classPattern: '**/build/classes/java/main',
+                sourcePattern: '**/src/main'
+            )
         }
     }
 }
