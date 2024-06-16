@@ -38,6 +38,10 @@ pipeline {
                 echo 'Uninstalling chart...'
                 sh 'helm uninstall funqtion -n test'
             }
+            steps {
+                echo 'Delete namespace...'
+                sh 'kubectl delete ns test'
+            }
         }
     }
 }
