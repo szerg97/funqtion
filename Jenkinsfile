@@ -27,8 +27,16 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
-                sh 'kubectl get ns'
+                echo 'Create namespace...'
+                sh 'kubectl create ns test'
+            }
+            steps {
+                echo 'Installing chart...'
+                sh 'helm install funqtion helm/funqtion -f helm/funqtion/values.yaml --set funqtion.operation=sub -n test'
+            }
+            steps {
+                echo 'Uninstalling chart...'
+                sh 'helm uninstall funqtion -n test'
             }
         }
     }
