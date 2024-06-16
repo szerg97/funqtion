@@ -49,7 +49,7 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: 'target/site/jacoco/index.html', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'target/site/jacoco/*', allowEmptyArchive: true
         }
     }
 }
