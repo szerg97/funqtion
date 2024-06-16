@@ -1,5 +1,6 @@
-package com.szalai.funqtion;
+package com.szalai.funqtion.util;
 
+import com.szalai.funqtion.model.OperationType;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 

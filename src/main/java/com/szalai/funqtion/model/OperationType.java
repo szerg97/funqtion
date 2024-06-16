@@ -1,4 +1,4 @@
-package com.szalai.funqtion;
+package com.szalai.funqtion.model;
 
 import lombok.Getter;
 

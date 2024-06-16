@@ -1,4 +1,4 @@
-package com.szalai.funqtion;
+package com.szalai.funqtion.exception;
 
 public class FunqtionException extends RuntimeException {
 
