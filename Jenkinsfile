@@ -4,7 +4,7 @@ pipeline {
         maven 'Maven3'
     }
     environment {
-        SONARQUBE_SERVER_URL = 'http://<SONARQUBE_SERVER_IP>:9000'
+        SONARQUBE_SERVER_URL = 'http://192.168.64.1:9000'
         SONARQUBE_SCANNER_IMAGE = 'sonarsource/sonar-scanner-cli'
         SONARQUBE_PROJECT_KEY = 'your_project_key'
         SONARQUBE_PROJECT_NAME = 'Your Project Name'
