@@ -50,9 +50,9 @@ pipeline {
     post {
         success {
             jacoco(
-                execPattern: '**/build/jacoco/*.exec',
-                classPattern: '**/target/classes',
-                sourcePattern: '**/src/main'
+                execPattern: '**/**.exec',
+                classPattern: '**/classes',
+                sourcePattern: '**/src/main/java'
             )
         }
     }
