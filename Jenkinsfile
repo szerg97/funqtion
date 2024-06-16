@@ -47,4 +47,9 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            archiveArtifacts artifacts: 'target/site/jacoco/index.html', allowEmptyArchive: true
+        }
+    }
 }
