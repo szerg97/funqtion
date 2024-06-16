@@ -23,6 +23,8 @@ spec:
             - containerPort: 8080
               protocol: TCP
           env:
+            - name: "FUNQTION_AUTO"
+              value: {{ .Values.funqtion.auto | quote}}
             - name: "FUNQTION_OPERATION"
               value: {{ .Values.funqtion.operation }}
       restartPolicy: Always

@@ -1,7 +1,9 @@
 package com.szalai.funqtion;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.function.BiConsumer;
@@ -28,7 +30,7 @@ public class FunqtionService {
     private BiConsumer<Integer, Integer> logIt(BiFunction<Integer, Integer, Integer> handler) {
         return (numberA, numberB) -> {
             final int result = handler.apply(numberA, numberB);
-            log.info(String.format("Operation %s, result: %s", operation, result));
+            log.info(String.format("%s %s %s is: %s", numberA, operation, numberB, result));
         };
     }
 

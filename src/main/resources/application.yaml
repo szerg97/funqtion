@@ -2,4 +2,5 @@ spring:
   application:
     name: "funqtion"
 funqtion:
+  auto: false
   operation: "sum"
