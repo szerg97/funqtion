@@ -27,22 +27,17 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                step {
-                    echo 'Create namespace...'
-                    sh 'kubectl create ns test'
-                }
-                step {
-                    echo 'Installing chart...'
-                    sh 'helm install funqtion helm/funqtion -f helm/funqtion/values.yaml --set funqtion.operation=sub -n test'
-                }
-                step {
-                    echo 'Uninstalling chart...'
-                    sh 'helm uninstall funqtion -n test'
-                }
-                step {
-                    echo 'Delete namespace...'
-                    sh 'kubectl delete ns test'
-                }
+                echo 'Create namespace...'
+                sh 'kubectl create ns test'
+
+                echo 'Installing chart...'
+                sh 'helm install funqtion helm/funqtion -f helm/funqtion/values.yaml --set funqtion.operation=sub -n test'
+
+                echo 'Uninstalling chart...'
+                sh 'helm uninstall funqtion -n test'
+
+                echo 'Delete namespace...'
+                sh 'kubectl delete ns test'
             }
         }
     }
